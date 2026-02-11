@@ -1,5 +1,4 @@
-// src/context/ThemeContext.jsx
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 const ThemeContext = createContext(null);
 
@@ -12,27 +11,37 @@ export function ThemeProvider({ children }) {
   const [lanternVisible, setLanternVisible] = useState(
     () => (localStorage.getItem('theme') || 'light') === 'evening'
   );
+  const timeoutRef = useRef(null);
 
-  // Sync data-theme attribute and localStorage
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   const toggleTheme = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     if (theme === 'light') {
-      // Light → Evening: colors switch first, lanterns fade in after
       setThemeState('evening');
-      setTimeout(() => setLanternVisible(true), 50);
+      timeoutRef.current = setTimeout(() => setLanternVisible(true), 50);
     } else {
-      // Evening → Day: lanterns fade out first, then colors switch
       setLanternVisible(false);
-      setTimeout(() => setThemeState('light'), LANTERN_FADE_MS);
+      timeoutRef.current = setTimeout(() => setThemeState('light'), LANTERN_FADE_MS);
     }
   }, [theme]);
 
+  const value = useMemo(
+    () => ({ theme, toggleTheme, lanternVisible }),
+    [theme, toggleTheme, lanternVisible]
+  );
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, lanternVisible }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
