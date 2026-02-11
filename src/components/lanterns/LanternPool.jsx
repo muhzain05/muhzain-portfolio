@@ -42,10 +42,10 @@ function randomEdgePosition() {
   const zone = Math.random();
   if (zone < 0.35) {
     // Left edge strip
-    return { x: 2 + Math.random() * 9, y: 10 + Math.random() * 78 };
+    return { x: 2 + Math.random() * 9, y: 13 + Math.random() * 75 };
   } else if (zone < 0.7) {
     // Right edge strip
-    return { x: 89 + Math.random() * 9, y: 10 + Math.random() * 78 };
+    return { x: 89 + Math.random() * 9, y: 13 + Math.random() * 75 };
   } else {
     // Top band
     return { x: 15 + Math.random() * 68, y: 2 + Math.random() * 10 };
