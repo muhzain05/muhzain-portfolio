@@ -41,8 +41,8 @@ export function Home() {
             <div className="flex items-center gap-6 mt-10">
               <a
                 href="mailto:mzainasad05@gmail.com"
-                className="px-6 py-3 rounded-full text-sm font-medium text-white transition-colors duration-300"
-                style={{ backgroundColor: 'var(--color-fg)' }}
+                className="px-6 py-3 rounded-full text-sm font-medium transition-colors duration-300"
+                style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-bg)' }}
               >
                 Let's chat
               </a>

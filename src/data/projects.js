@@ -1,0 +1,32 @@
+export const projects = [
+  {
+    id: 1,
+    title: "GNN-CeramicMap",
+    description: "Built a custom GCN layer with distance-aware edge features, outperforming traditional models in atomic energy prediction.",
+    image: "/projects/project1.png",
+    tags: ["PyTorch", "TensorFlow", "Python"],
+    year: "2024",
+    githubUrl: "https://github.com/muhzain05/GNN-CeramicMap",
+    blogUrl: "/blog/gnn-ceramicmap",
+  },
+  {
+    id: 2,
+    title: "3D Ray Tracer",
+    description: "A lightweight 3D ray tracer in C with Lambertian shading, hard shadows, anti-aliasing, and PPM output.",
+    image: "/projects/main.png",
+    tags: ["C", "Graphics"],
+    year: "2024",
+    githubUrl: "https://github.com/muhzain05/3D-Ray-Tracer",
+    blogUrl: "/blog/3d-ray-tracer",
+  },
+  {
+    id: 3,
+    title: "EmotiLog",
+    description: "Android mood tracker for quick daily emotional journaling with automatic timestamps and Firebase backend.",
+    image: "/projects/project3.png",
+    tags: ["Java", "Firebase", "Android"],
+    year: "2024",
+    githubUrl: "https://github.com/muhzain05/EmotiLog",
+    blogUrl: "/blog/emotilog",
+  },
+];

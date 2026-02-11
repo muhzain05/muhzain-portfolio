@@ -6,14 +6,13 @@ import { useTheme } from '@/context/ThemeContext';
 export function CustomCursor() {
   const { theme } = useTheme();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  const springConfig = { damping: 45, stiffness: 90, mass: 1.8 };
+  const springConfig = { damping: 28, stiffness: 280, mass: 0.5 };
   const x = useSpring(cursorX, springConfig);
   const y = useSpring(cursorY, springConfig);
 
@@ -36,27 +35,18 @@ export function CustomCursor() {
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
 
-    const handleMouseOver = (e) => {
-      const target = e.target.closest('a, button, [data-cursor-hover]');
-      setIsHovering(!!target);
-    };
-
     window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
     document.addEventListener('mouseenter', handleMouseEnter);
-    document.addEventListener('mouseover', handleMouseOver);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mouseenter', handleMouseEnter);
-      document.removeEventListener('mouseover', handleMouseOver);
     };
   }, [cursorX, cursorY, prefersReducedMotion, isTouchDevice, isVisible]);
 
   if (prefersReducedMotion || isTouchDevice) return null;
-
-  const size = isHovering ? 48 : 20;
 
   return (
     <motion.div
@@ -65,26 +55,19 @@ export function CustomCursor() {
         y,
         translateX: '-50%',
         translateY: '-50%',
+        width: 10,
+        height: 10,
         zIndex: 9999,
         position: 'fixed',
         top: 0,
         left: 0,
         pointerEvents: 'none',
-        mixBlendMode: 'difference',
-        backgroundColor: 'white',
+        backgroundColor: 'var(--color-fg)',
         borderRadius: '50%',
-        boxShadow: theme === 'evening' ? '0 0 14px 2px rgba(212, 163, 115, 0.2)' : 'none',
+        boxShadow: theme === 'evening' ? '0 0 8px 1px rgba(212, 163, 115, 0.35)' : 'none',
       }}
-      animate={{
-        width: size,
-        height: size,
-        opacity: isVisible ? 1 : 0,
-      }}
-      transition={{
-        width: { type: 'spring', damping: 20, stiffness: 300 },
-        height: { type: 'spring', damping: 20, stiffness: 300 },
-        opacity: { duration: 0.15 },
-      }}
+      animate={{ opacity: isVisible ? 1 : 0 }}
+      transition={{ opacity: { duration: 0.15 } }}
     />
   );
 }

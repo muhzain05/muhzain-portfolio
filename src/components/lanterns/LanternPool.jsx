@@ -15,23 +15,28 @@ function LanternSVG({ size, color = '#D4A373' }) {
       viewBox="0 0 32 52"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ overflow: 'visible' }}
+      style={{
+        overflow: 'visible',
+        filter: `drop-shadow(0 0 5px ${color}) drop-shadow(0 0 14px rgba(212, 163, 115, 0.45))`,
+      }}
     >
+      {/* Outer bloom halo — wide, very soft */}
+      <ellipse cx="16" cy="30" rx="18" ry="20" fill={color} opacity="0.07" />
       {/* Top hook */}
       <line x1="16" y1="0" x2="16" y2="6" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       {/* Top cap */}
       <rect x="8" y="6" width="16" height="4" rx="2" fill={color} opacity="0.9" />
       {/* Body */}
-      <ellipse cx="16" cy="28" rx="11" ry="16" fill={color} opacity="0.18" />
-      <ellipse cx="16" cy="28" rx="11" ry="16" stroke={color} strokeWidth="1" opacity="0.6" />
+      <ellipse cx="16" cy="28" rx="11" ry="16" fill={color} opacity="0.32" />
+      <ellipse cx="16" cy="28" rx="11" ry="16" stroke={color} strokeWidth="1" opacity="0.7" />
       {/* Vertical ribs */}
       <line x1="10" y1="12" x2="8" y2="44" stroke={color} strokeWidth="0.75" opacity="0.4" />
       <line x1="16" y1="10" x2="16" y2="46" stroke={color} strokeWidth="0.75" opacity="0.4" />
       <line x1="22" y1="12" x2="24" y2="44" stroke={color} strokeWidth="0.75" opacity="0.4" />
       {/* Bottom cap */}
       <rect x="8" y="42" width="16" height="4" rx="2" fill={color} opacity="0.9" />
-      {/* Glow bloom */}
-      <ellipse cx="16" cy="28" rx="9" ry="13" fill={color} opacity="0.08" />
+      {/* Inner glow core */}
+      <ellipse cx="16" cy="28" rx="7" ry="11" fill={color} opacity="0.28" />
     </svg>
   );
 }
