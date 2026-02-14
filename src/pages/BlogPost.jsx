@@ -1,126 +1,157 @@
-import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { blogPosts } from "../data/blogPosts";
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { Navbar } from '@/components/Navbar';
+import { CTAFooter } from '@/components/layout/CTAFooter';
+import { PageTransition } from '@/components/layout/PageTransition';
+import { SectionReveal } from '@/components/ui/SectionReveal';
+import { blogPosts } from '@/data/blogPosts';
 
-export const BlogPost = () => {
+export function BlogPost() {
   const { postId } = useParams();
   const post = blogPosts.find((entry) => entry.id === postId);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [postId]);
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <PageTransition>
         <Navbar />
-        <main className="pt-32 pb-24 px-4">
-          <div className="container mx-auto max-w-3xl text-center space-y-6">
-            <h1 className="text-3xl md:text-4xl font-semibold">
-              This article could not be found.
+        <main className="px-8 min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl mb-4" style={{ fontFamily: 'var(--font-serif)' }}>
+              Post not found.
             </h1>
-            <p className="text-muted-foreground">
-              It might have been moved or removed. You can browse all posts from the blog index.
-            </p>
             <Link
               to="/blog"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-border/40 text-sm font-medium text-foreground/80 hover:text-primary hover:border-primary/60 transition-colors duration-300"
+              className="text-sm text-[var(--color-accent)] hover:underline"
             >
-              <ArrowLeft size={16} />
               Back to blog
             </Link>
           </div>
         </main>
-        <Footer />
-      </div>
+        <CTAFooter />
+      </PageTransition>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <PageTransition>
       <Navbar />
-      <main className="pt-32 pb-24 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300"
-          >
-            <ArrowLeft size={16} />
-            All posts
-          </Link>
 
-          <article className="bg-card border border-border/40 rounded-3xl p-8 md:p-12 shadow-xs mt-6">
-            <header className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-              <div className="text-left md:max-w-3xl">
-                <h1 className="text-3xl md:text-4xl font-semibold text-primary tracking-tight text-left">
-                  {post.title}
-                </h1>
-                <p className="text-muted-foreground mt-3 text-base md:text-lg leading-relaxed text-left">
-                  {post.excerpt}
-                </p>
+      <main
+        className="px-8"
+        style={{ paddingTop: '8rem', paddingBottom: 'var(--section-padding)' }}
+      >
+        <div className="mx-auto max-w-[var(--container-narrow)]">
+          <SectionReveal>
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-2 text-sm text-[var(--color-muted)] hover:text-[var(--color-fg)] transition-colors mb-10"
+            >
+              <ArrowLeft size={16} />
+              All posts
+            </Link>
+          </SectionReveal>
+
+          <SectionReveal delay={0.05}>
+            <header className="mb-12">
+              <h1
+                className="text-3xl md:text-4xl mb-4"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                {post.title}
+              </h1>
+              <p className="text-lg text-[var(--color-muted)] leading-relaxed mb-4">
+                {post.excerpt}
+              </p>
+              <div className="flex items-center gap-4 text-sm text-[var(--color-muted)]">
+                <span>{post.publishedAt}</span>
+                <span>·</span>
+                <span>{post.readTime}</span>
               </div>
-              <div className="text-sm text-muted-foreground md:text-right shrink-0">
-                <p className="font-medium text-foreground/80">{post.publishedAt}</p>
-                <p>{post.readTime}</p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {post.tags.map((tag) => (
+                  <span
+                    key={`${post.id}-${tag}`}
+                    className="text-xs tracking-wider uppercase"
+                    style={{ color: 'var(--color-accent)' }}
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </header>
+          </SectionReveal>
 
-            <div className="flex flex-wrap gap-2 mt-6">
-              {post.tags.map((tag) => (
-                <span
-                  key={`${post.id}-${tag}`}
-                  className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full tracking-wide uppercase"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-10 space-y-10">
-              {post.sections.map((section) => (
-                <section key={`${post.id}-${section.heading}`} className="space-y-4">
-                  <h2 className="text-xl font-semibold text-foreground/90">
+          {/* Article body */}
+          <div className="space-y-12">
+            {post.sections.map((section, i) => (
+              <SectionReveal key={`${post.id}-${section.heading}`} delay={0.1 + i * 0.05}>
+                <section>
+                  <h2
+                    className="text-xl md:text-2xl mb-4"
+                    style={{ fontFamily: 'var(--font-serif)' }}
+                  >
                     {section.heading}
                   </h2>
-                  {section.body.map((paragraph, index) => (
+                  {section.body.map((paragraph, j) => (
                     <p
-                      key={`${post.id}-${section.heading}-${index}`}
-                      className="text-base leading-relaxed text-muted-foreground"
+                      key={`${post.id}-${section.heading}-${j}`}
+                      className="text-[var(--color-muted)] leading-relaxed mb-4"
                     >
                       {paragraph}
                     </p>
                   ))}
                 </section>
-              ))}
-            </div>
+              </SectionReveal>
+            ))}
+          </div>
 
-            <div className="mt-10 pt-6 border-t border-border/40">
-              <h3 className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+          {/* Takeaways */}
+          <SectionReveal delay={0.2}>
+            <div
+              className="mt-16 pt-8 border-t"
+              style={{ borderColor: 'var(--color-border)' }}
+            >
+              <h3
+                className="text-xs font-medium tracking-[0.15em] uppercase mb-6"
+                style={{ color: 'var(--color-muted)', fontFamily: 'var(--font-sans)' }}
+              >
                 Key Takeaways
               </h3>
-              <ul className="mt-4 space-y-2 text-base leading-relaxed text-muted-foreground list-disc list-inside">
-                {post.takeaways.map((takeaway, index) => (
-                  <li key={`${post.id}-takeaway-${index}`}>{takeaway}</li>
+              <ul className="space-y-3">
+                {post.takeaways.map((takeaway, i) => (
+                  <li
+                    key={`${post.id}-takeaway-${i}`}
+                    className="text-[var(--color-muted)] leading-relaxed pl-4"
+                    style={{ borderLeft: '2px solid var(--color-accent)' }}
+                  >
+                    {takeaway}
+                  </li>
                 ))}
               </ul>
             </div>
-          </article>
+          </SectionReveal>
 
-          <div className="mt-10 flex justify-center">
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border/40 text-sm font-medium text-foreground/80 hover:text-primary hover:border-primary/60 transition-colors duration-300"
-            >
-              <ArrowLeft size={16} />
-              Back to all posts
-            </Link>
-          </div>
+          {/* Back link */}
+          <SectionReveal delay={0.25}>
+            <div className="mt-16 text-center">
+              <Link
+                to="/blog"
+                className="inline-flex items-center gap-2 text-sm text-[var(--color-muted)] hover:text-[var(--color-fg)] transition-colors"
+              >
+                <ArrowLeft size={16} />
+                Back to all posts
+              </Link>
+            </div>
+          </SectionReveal>
         </div>
       </main>
-      <Footer />
-    </div>
+
+      <CTAFooter />
+    </PageTransition>
   );
-};
+}
