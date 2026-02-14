@@ -108,4 +108,49 @@ export const blogPosts = [
       "Thoughtful defaults beat feature creep for wellness apps.",
     ],
   },
+  {
+    id: "plantagotchi",
+    projectId: 2,
+    title: "Plantagotchi: Giving My Houseplant a Voice",
+    publishedAt: "May 20, 2024",
+    readTime: "7 min read",
+    excerpt:
+      "Turning soil probes, gas sensors, and bioelectrical whispers into a hand-drawn companion that reacts in real time when you mist, shade, or water a living plant.",
+    tags: ["IoT", "C++", "Embedded"],
+    sections: [
+      {
+        heading: "Letting Plants Speak First",
+        body: [
+          "Pets yelp, people talk, but most houseplants can only wilt. Plantagotchi started as a way to flip that script by personifying the plant before the caretaker. Every reading—temperature, humidity, or micro-voltage—feeds a personality state that decides how the character looks, what it says, and how urgent the request feels.",
+          "I treated the project like an illustrated storybook. Instead of pushing charts, the app tells you the plant is dizzy from the wind or content with a sunbath. The goal was to encourage empathy rather than checklist-style watering.",
+        ],
+      },
+      {
+        heading: "Sensors, Signals, and Streaming",
+        body: [
+          "A small hardware stack (BioAmp EXG Pill, MQ-3, HL-83, YL-69, DHT11, and a lightweight moisture probe) captures environmental and bioelectric signals. An Arduino Uno normalizes the readings and streams them to a Node.js service over serial.",
+          "From there a WebSocket server pushes updates to any connected client so the plant’s mood shifts instantly when the environment changes. The message shape mirrors the data the Arduino emits—think `STATE;soil=650;temp=24.5;...`—so debugging the pipeline stays simple.",
+        ],
+      },
+      {
+        heading: "An Illustrated Companion App",
+        body: [
+          "The front end is a React Native + Expo app that swaps between hand-drawn states. Animations keep faces breathing, blinking, and hoisting little cardboard protest signs whenever a sensor crosses its comfort band.",
+          "Dialogue bubbles carry most of the UX. When soil moisture drops, you see a playful plea for water; when a fan kicks on, the plant complains about being windswept. Kids and educators loved how the UI taught them to correlate sensor trends with plant behavior.",
+        ],
+      },
+      {
+        heading: "Testing Without a Greenhouse",
+        body: [
+          "Hardware iteration is slow, so I built a mock sensor server that mirrors the WebSocket protocol. Sliders for soil, humidity, MQ-2 gas, rain, and the bio-signal feed live data to the app at any interval I choose.",
+          "The mock tool let me stage screenshots for different moods and ensured the animation logic felt smooth before plugging into the real plant. When I do need hardware validation, I can still stream the same packets straight from the Arduino without changing the client.",
+        ],
+      },
+    ],
+    takeaways: [
+      "Raw sensor numbers become meaningful when you wrap them in narrative and expressive art.",
+      "Streaming over WebSockets keeps the character responsive enough to feel alive.",
+      "A dedicated mock server shortens iteration loops for any hardware-heavy UX project.",
+    ],
+  },
 ];
