@@ -1,4 +1,4 @@
-import { ArrowRight, Github, FileText } from "lucide-react";
+import { ArrowRight, Github, FileText, Link2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { 
   SiPytorch, 
@@ -6,7 +6,9 @@ import {
   SiPython, 
   SiCplusplus,
   SiReact, 
+  SiExpo,
   SiNodedotjs, 
+  SiSocketdotio,
   SiStripe,
   SiOpenjdk,
   SiFirebase
@@ -28,15 +30,19 @@ const projects = [
   },
   {
     id: 2,
-    title: "3D Ray Tracer",
+    title: "Plantagochi",
     description:
-      "A lightweight 3D ray tracer implemented in C. Supports vector math, ray–sphere intersections, Lambertian shading, hard shadows, anti-aliasing, and PPM output.",
-    image: "/projects/main.png",
+      "Plantagotchi is a hand-drawn interactive plant care app that uses real environmental and bio-signal sensors to let your plant “talk.”",
+    image: "/projects/Plantagotchi_project.png",
     technologies: [
-      { name: "C++", icon: SiCplusplus, color: "#00599C" },
+      { name: "React Native", icon: SiReact, color: "#61DAFB" },
+      { name: "Expo", icon: SiExpo, color: "#575757ff" },
+      { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
+      { name: "WebSocket", icon: SiSocketdotio, color: "#ffffffff" },
     ],
-    githubUrl: "https://github.com/MuhammadZain2005/3D-Ray-Tracer",
-    blogUrl: "/blog/3d-ray-tracer",
+    githubUrl: "https://github.com/MuhammadZain2005/Plantagotchi",
+    blogUrl: "/blog/plantagotchi",
+    demoUrl: "https://youtube.com/shorts/_Rtnkhy3jHY?si=oCCsWEAq1hQDIRSl",
   },
   {
     id: 3,
@@ -62,7 +68,7 @@ export const ProjectsSection = () => {
           Featured <span className="text-primary"> Projects </span>
         </h2>
 
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-left text-muted-foreground mb-12 max-w-2xl mx-auto">
           Here are some of my recent projects. Each project was carefully
           crafted with attention to detail, performance, and user experience.
         </p>
@@ -117,6 +123,17 @@ export const ProjectsSection = () => {
                   >
                     <FileText size={22} />
                   </Link>
+                )}
+                {project.demoUrl && (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Watch the demo for ${project.title}`}
+                    className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                  >
+                    <Link2 size={22} />
+                  </a>
                 )}
                 <a
                   href={project.githubUrl}
