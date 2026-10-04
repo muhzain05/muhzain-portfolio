@@ -1,9 +1,9 @@
-import { Navbar } from '@/components/Navbar';
-import { CTAFooter } from '@/components/layout/CTAFooter';
-import { PageTransition } from '@/components/layout/PageTransition';
-import { SectionReveal } from '@/components/ui/SectionReveal';
-import { AccordionItem } from '@/components/ui/AccordionItem';
-import { experiences, education } from '@/data/experience';
+import { Navbar } from "@/components/Navbar";
+import { CTAFooter } from "@/components/layout/CTAFooter";
+import { PageTransition } from "@/components/layout/PageTransition";
+import { SectionReveal } from "@/components/ui/SectionReveal";
+import { AccordionItem } from "@/components/ui/AccordionItem";
+import { experiences, education } from "@/data/experience";
 
 export function Resume() {
   return (
@@ -11,14 +11,15 @@ export function Resume() {
       <Navbar />
 
       <main
+        id="main-content"
         className="px-8"
-        style={{ paddingTop: '8rem', paddingBottom: 'var(--section-padding)' }}
+        style={{ paddingTop: "8rem", paddingBottom: "var(--section-padding)" }}
       >
         <div className="mx-auto max-w-[var(--container-narrow)]">
           <SectionReveal>
             <h1
               className="text-3xl md:text-4xl mb-2"
-              style={{ fontFamily: 'var(--font-serif)' }}
+              style={{ fontFamily: "var(--font-serif)" }}
             >
               Resume
             </h1>
@@ -29,6 +30,15 @@ export function Resume() {
 
           {/* Experience section */}
           <SectionReveal delay={0.1}>
+            <h2
+              className="text-xs font-medium tracking-[0.15em] uppercase mb-8"
+              style={{
+                color: "var(--color-muted)",
+                fontFamily: "var(--font-sans)",
+              }}
+            >
+              Experience
+            </h2>
             <div className="border-t border-[var(--color-border)]">
               {experiences.map((exp) => (
                 <AccordionItem
@@ -45,8 +55,8 @@ export function Resume() {
                           key={tag}
                           className="px-3 py-1 text-xs rounded-full border"
                           style={{
-                            borderColor: 'var(--color-border)',
-                            color: 'var(--color-muted)',
+                            borderColor: "var(--color-border)",
+                            color: "var(--color-muted)",
                           }}
                         >
                           {tag}
@@ -63,7 +73,10 @@ export function Resume() {
           <SectionReveal delay={0.15}>
             <h2
               className="text-xs font-medium tracking-[0.15em] uppercase mt-16 mb-8"
-              style={{ color: 'var(--color-muted)', fontFamily: 'var(--font-sans)' }}
+              style={{
+                color: "var(--color-muted)",
+                fontFamily: "var(--font-sans)",
+              }}
             >
               Education
             </h2>

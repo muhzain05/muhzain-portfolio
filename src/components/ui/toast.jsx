@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva } from "class-variance-authority";
@@ -99,4 +100,29 @@ export {
   ToastDescription,
   ToastClose,
   ToastAction,
+};
+
+Toast.propTypes = {
+  className: PropTypes.string,
+  variant: PropTypes.oneOf(['default', 'destructive']),
+};
+
+ToastViewport.propTypes = {
+  className: PropTypes.string,
+};
+
+ToastAction.propTypes = {
+  className: PropTypes.string,
+};
+
+ToastClose.propTypes = {
+  className: PropTypes.string,
+};
+
+ToastTitle.propTypes = {
+  className: PropTypes.string,
+};
+
+ToastDescription.propTypes = {
+  className: PropTypes.string,
 };

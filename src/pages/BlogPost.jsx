@@ -1,27 +1,30 @@
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { Navbar } from '@/components/Navbar';
-import { CTAFooter } from '@/components/layout/CTAFooter';
-import { PageTransition } from '@/components/layout/PageTransition';
-import { SectionReveal } from '@/components/ui/SectionReveal';
-import { blogPosts } from '@/data/blogPosts';
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { Navbar } from "@/components/Navbar";
+import { CTAFooter } from "@/components/layout/CTAFooter";
+import { PageTransition } from "@/components/layout/PageTransition";
+import { SectionReveal } from "@/components/ui/SectionReveal";
+import { blogPosts } from "@/data/blogPosts";
+import { projects } from "@/data/projects";
 
 export function BlogPost() {
   const { postId } = useParams();
   const post = blogPosts.find((entry) => entry.id === postId);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [postId]);
+  const project = projects.find((entry) => entry.id === post?.projectId);
 
   if (!post) {
     return (
       <PageTransition>
         <Navbar />
-        <main className="px-8 min-h-screen flex items-center justify-center">
+        <main
+          id="main-content"
+          className="px-8 min-h-screen flex items-center justify-center"
+        >
           <div className="text-center">
-            <h1 className="text-2xl mb-4" style={{ fontFamily: 'var(--font-serif)' }}>
+            <h1
+              className="text-2xl mb-4"
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
               Post not found.
             </h1>
             <Link
@@ -42,8 +45,9 @@ export function BlogPost() {
       <Navbar />
 
       <main
+        id="main-content"
         className="px-8"
-        style={{ paddingTop: '8rem', paddingBottom: 'var(--section-padding)' }}
+        style={{ paddingTop: "8rem", paddingBottom: "var(--section-padding)" }}
       >
         <div className="mx-auto max-w-[var(--container-narrow)]">
           <SectionReveal>
@@ -60,7 +64,7 @@ export function BlogPost() {
             <header className="mb-12">
               <h1
                 className="text-3xl md:text-4xl mb-4"
-                style={{ fontFamily: 'var(--font-serif)' }}
+                style={{ fontFamily: "var(--font-serif)" }}
               >
                 {post.title}
               </h1>
@@ -77,7 +81,7 @@ export function BlogPost() {
                   <span
                     key={`${post.id}-${tag}`}
                     className="text-xs tracking-wider uppercase"
-                    style={{ color: 'var(--color-accent)' }}
+                    style={{ color: "var(--color-accent)" }}
                   >
                     {tag}
                   </span>
@@ -86,14 +90,33 @@ export function BlogPost() {
             </header>
           </SectionReveal>
 
+          {project && (
+            <figure className="article-cover">
+              <img
+                src={project.image}
+                alt={project.imageAlt}
+                width="1200"
+                height="675"
+              />
+              <figcaption>
+                {project.id === "ray-tracer"
+                  ? "Actual repository render."
+                  : "Editorial illustration generated with Higgsfield; measured figures are identified separately below."}
+              </figcaption>
+            </figure>
+          )}
+
           {/* Article body */}
           <div className="space-y-12">
             {post.sections.map((section, i) => (
-              <SectionReveal key={`${post.id}-${section.heading}`} delay={0.1 + i * 0.05}>
+              <SectionReveal
+                key={`${post.id}-${section.heading}`}
+                delay={0.1 + i * 0.05}
+              >
                 <section>
                   <h2
                     className="text-xl md:text-2xl mb-4"
-                    style={{ fontFamily: 'var(--font-serif)' }}
+                    style={{ fontFamily: "var(--font-serif)" }}
                   >
                     {section.heading}
                   </h2>
@@ -105,6 +128,73 @@ export function BlogPost() {
                       {paragraph}
                     </p>
                   ))}
+                  {section.callout && (
+                    <aside className="article-callout">{section.callout}</aside>
+                  )}
+                  {section.figure && (
+                    <figure className="article-figure">
+                      <a
+                        href={section.figure.src}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open full figure: ${section.figure.alt}`}
+                      >
+                        <img
+                          src={section.figure.src}
+                          alt={section.figure.alt}
+                          width={section.figure.width}
+                          height={section.figure.height}
+                          loading="lazy"
+                        />
+                      </a>
+                      <figcaption>
+                        {section.figure.caption}{" "}
+                        <a
+                          href={section.figure.source}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Source ↗
+                        </a>
+                      </figcaption>
+                    </figure>
+                  )}
+                  {section.table && (
+                    <div
+                      className="article-table-wrap"
+                      tabIndex={0}
+                      role="region"
+                      aria-label={section.table.caption}
+                    >
+                      <table className="article-table">
+                        <caption>{section.table.caption}</caption>
+                        <thead>
+                          <tr>
+                            {section.table.headers.map((header) => (
+                              <th key={header} scope="col">
+                                {header}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {section.table.rows.map((row) => (
+                            <tr key={row[0]}>
+                              {row.map((cell, index) =>
+                                index === 0 ? (
+                                  <th key={index} scope="row">
+                                    {cell}
+                                  </th>
+                                ) : (
+                                  <td key={index}>{cell}</td>
+                                ),
+                              )}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </section>
               </SectionReveal>
             ))}
@@ -114,11 +204,14 @@ export function BlogPost() {
           <SectionReveal delay={0.2}>
             <div
               className="mt-16 pt-8 border-t"
-              style={{ borderColor: 'var(--color-border)' }}
+              style={{ borderColor: "var(--color-border)" }}
             >
               <h3
                 className="text-xs font-medium tracking-[0.15em] uppercase mb-6"
-                style={{ color: 'var(--color-muted)', fontFamily: 'var(--font-sans)' }}
+                style={{
+                  color: "var(--color-muted)",
+                  fontFamily: "var(--font-sans)",
+                }}
               >
                 Key Takeaways
               </h3>
@@ -127,7 +220,7 @@ export function BlogPost() {
                   <li
                     key={`${post.id}-takeaway-${i}`}
                     className="text-[var(--color-muted)] leading-relaxed pl-4"
-                    style={{ borderLeft: '2px solid var(--color-accent)' }}
+                    style={{ borderLeft: "2px solid var(--color-accent)" }}
                   >
                     {takeaway}
                   </li>
@@ -135,6 +228,21 @@ export function BlogPost() {
               </ul>
             </div>
           </SectionReveal>
+
+          {post.sources && (
+            <section className="article-sources">
+              <h2>Source notes</h2>
+              <ul>
+                {post.sources.map(([label, url]) => (
+                  <li key={url}>
+                    <a href={url} target="_blank" rel="noopener noreferrer">
+                      {label} ↗
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {/* Back link */}
           <SectionReveal delay={0.25}>

@@ -1,4 +1,5 @@
-import { useLanterns } from './LanternContext';
+import PropTypes from 'prop-types';
+import { useLanterns } from './lanternState';
 import { Lantern } from './Lantern';
 
 const lanternConfigs = {
@@ -44,3 +45,7 @@ export function LanternLayer({ page = 'default' }) {
     </div>
   );
 }
+
+LanternLayer.propTypes = {
+  page: PropTypes.string,
+};

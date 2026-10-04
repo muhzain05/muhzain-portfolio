@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useTheme } from '@/context/ThemeContext';
+import { useTheme } from '@/context/theme';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 // ─── SVG Lantern Shape ────────────────────────────────────────────────────────
@@ -44,17 +45,11 @@ function LanternSVG({ size, color = '#D4A373' }) {
 // ─── Lifecycle Helpers ────────────────────────────────────────────────────────
 
 function randomEdgePosition() {
-  const zone = Math.random();
-  if (zone < 0.35) {
-    // Left edge strip
-    return { x: 2 + Math.random() * 9, y: 13 + Math.random() * 75 };
-  } else if (zone < 0.7) {
-    // Right edge strip
-    return { x: 89 + Math.random() * 9, y: 13 + Math.random() * 75 };
-  } else {
-    // Top band
-    return { x: 15 + Math.random() * 68, y: 2 + Math.random() * 10 };
-  }
+  // Keep the center and navigation clear; lanterns live in the outer margins.
+  return {
+    x: Math.random() < 0.5 ? 1 + Math.random() * 3 : 95 + Math.random() * 2,
+    y: 20 + Math.random() * 65,
+  };
 }
 
 let _idCounter = 0;
@@ -70,7 +65,7 @@ function createLantern() {
     driftY: 6 + Math.random() * 4,
     driftX: 3 + Math.random() * 3,
     driftDuration: 12 + Math.random() * 8,
-    maxOpacity: 0.5 + Math.random() * 0.35,
+    maxOpacity: 0.25 + Math.random() * 0.2,
   };
 }
 
@@ -138,7 +133,7 @@ function LifecycleLantern({
 
 // ─── Pool Manager ─────────────────────────────────────────────────────────────
 
-const DESKTOP_COUNT = 7;
+const DESKTOP_COUNT = 5;
 const MOBILE_COUNT = 3;
 
 export function LanternPool() {
@@ -192,3 +187,23 @@ export function LanternPool() {
     </div>
   );
 }
+
+LanternSVG.propTypes = {
+  size: PropTypes.number.isRequired,
+  color: PropTypes.string,
+};
+
+LifecycleLantern.propTypes = {
+  id: PropTypes.number.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  size: PropTypes.number.isRequired,
+  driftY: PropTypes.number.isRequired,
+  driftX: PropTypes.number.isRequired,
+  driftDuration: PropTypes.number.isRequired,
+  maxOpacity: PropTypes.number.isRequired,
+  lifetime: PropTypes.number.isRequired,
+  fadeInDuration: PropTypes.number.isRequired,
+  fadeOutDuration: PropTypes.number.isRequired,
+  onExpired: PropTypes.func.isRequired,
+};

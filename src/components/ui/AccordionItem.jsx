@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useId, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 export function AccordionItem({ title, subtitle, period, children }) {
   const [isOpen, setIsOpen] = useState(false);
+  const panelId = useId();
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
     <div className="border-b border-[var(--color-border)]">
       <button
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         onClick={() => setIsOpen((prev) => !prev)}
         className="w-full py-8 flex items-center justify-between gap-4 text-left group"
       >
@@ -20,6 +24,7 @@ export function AccordionItem({ title, subtitle, period, children }) {
             {title}
           </h3>
           <p className="text-sm text-[var(--color-muted)] mt-1">{subtitle}</p>
+          <span className="sm:hidden text-xs text-[var(--color-muted)]">{period}</span>
         </div>
         <div className="flex items-center gap-6 shrink-0">
           <span className="text-sm text-[var(--color-muted)] hidden sm:block">
@@ -39,10 +44,11 @@ export function AccordionItem({ title, subtitle, period, children }) {
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
+            id={panelId}
             initial={prefersReducedMotion ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={prefersReducedMotion ? { height: 0, opacity: 0 } : { height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.4, 0, 0.2, 1] }}
             className="overflow-hidden"
           >
             <div className="pb-8 text-sm text-[var(--color-muted)] leading-relaxed max-w-2xl">
@@ -54,3 +60,10 @@ export function AccordionItem({ title, subtitle, period, children }) {
     </div>
   );
 }
+
+AccordionItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  period: PropTypes.string,
+  children: PropTypes.node,
+};

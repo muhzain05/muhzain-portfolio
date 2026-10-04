@@ -1,6 +1,6 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-
-const ThemeContext = createContext(null);
+import PropTypes from 'prop-types';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ThemeContext } from './theme';
 
 const LANTERN_FADE_MS = 650;
 
@@ -47,4 +47,7 @@ export function ThemeProvider({ children }) {
   );
 }
 
-export const useTheme = () => useContext(ThemeContext);
+
+ThemeProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

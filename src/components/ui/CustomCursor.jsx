@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
-import { useTheme } from '@/context/ThemeContext';
+import { useTheme } from '@/context/theme';
 
 export function CustomCursor() {
   const { theme } = useTheme();

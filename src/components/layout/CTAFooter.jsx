@@ -1,14 +1,15 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SectionReveal } from '@/components/ui/SectionReveal';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 const skills = [
-  'Machine Learning',
+  'Scientific ML',
   'Software Engineering',
-  'AI Research',
-  'Full Stack',
-  'Data Science',
+  'Geometric Learning',
+  'ML Systems',
+  'Molecular Simulation',
 ];
 
 export function CTAFooter() {
@@ -40,7 +41,7 @@ export function CTAFooter() {
               color: 'var(--color-dark-fg)',
             }}
           >
-            Let's build something{' '}
+            Let’s build something{' '}
             <em style={{ color: 'var(--color-dark-accent)' }}>great</em>{' '}
             together.
           </h2>
@@ -82,7 +83,7 @@ export function CTAFooter() {
               <div className="flex flex-col gap-1">
                 <a href="mailto:mzainasad05@gmail.com" className="hover:text-[var(--color-dark-accent)] transition-colors">Email</a>
                 <a href="https://github.com/muhzain05" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-dark-accent)] transition-colors">GitHub</a>
-                <a href="https://linkedin.com/in/muhammadzainasad" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-dark-accent)] transition-colors">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/muhammad-zain-asad-94316b286/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-dark-accent)] transition-colors">LinkedIn</a>
               </div>
             </div>
             <div>
@@ -141,3 +142,9 @@ function SkillTag({ label, index, prefersReducedMotion }) {
     </motion.span>
   );
 }
+
+SkillTag.propTypes = {
+  label: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  prefersReducedMotion: PropTypes.bool.isRequired,
+};

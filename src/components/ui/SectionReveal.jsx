@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
@@ -28,3 +29,9 @@ export function SectionReveal({ children, className = '', delay = 0 }) {
     </motion.div>
   );
 }
+
+SectionReveal.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  delay: PropTypes.number,
+};

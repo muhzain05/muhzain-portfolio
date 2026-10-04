@@ -1,51 +1,42 @@
 export const experiences = [
   {
-    id: 1,
-    company: "Centre for Defence: Advanced Materials (CDAM)",
+    id: "ualberta-research",
+    company: "University of Alberta",
+    institution: "University of Alberta",
+    role: "ML Research Intern",
+    period: "May 2026–Present",
+    description:
+      "Investigating pretrained MACE graph neural network potentials for molecular simulation, with transition-state analysis and lightweight corrections to a chosen reference method.",
+    tags: ["MACE", "xTB", "ASE", "Scientific ML"],
+  },
+  {
+    id: "pcl",
+    company: "PCL",
+    institution: "University of Alberta",
+    role: "AI Capstone",
+    period: "Jan–Apr 2026",
+    description:
+      "Worked on a multi-stage AI pipeline that reconstructs industrial isometric piping drawings into structured JSON, connecting text extraction with relationship inference.",
+    tags: ["Document understanding", "ML pipelines"],
+  },
+  {
+    id: "cdam",
+    company: "Centre for Defence: Advanced Materials",
     institution: "University of Alberta",
     role: "Machine Learning Intern",
-    period: "Jan 2025 - Present",
-    description: "Built Graph Neural Networks for predicting material properties in advanced ceramics, achieving 40 meV/atom energy and 60 meV/\u00C5 force prediction errors. Engineered data pipeline with custom VASP parser for 2,200+ DFT structures.",
-    tags: ["PyTorch", "TensorFlow", "Scikit-learn", "NumPy", "Python"],
-    url: "https://sites.ualberta.ca/~jdhogan/index.html",
-  },
-  {
-    id: 2,
-    company: "Connexix",
-    institution: "Connexix",
-    role: "Software Engineering Intern",
-    period: "Jun 2024 - Aug 2024",
-    description: "Built scalable e-commerce platform with AI-driven recommendations and predictive inventory tracking, improving user engagement by 25% and reducing overstock by 30%.",
-    tags: ["React", "Node.js", "MongoDB", "Flask", "Python"],
-    url: "https://connexix.com/",
-  },
-  {
-    id: 3,
-    company: "PSA @ UAlberta",
-    institution: "University of Alberta",
-    role: "Fundraising Volunteer",
-    period: "Nov 2023 - Apr 2024",
-    description: "Spearheaded fundraising campaigns leveraging strategic planning and creative initiatives to drive community engagement.",
-    tags: [],
-    url: "https://www.ualberta.ca/",
-  },
-  {
-    id: 4,
-    company: "Pixelbyte",
-    institution: "Pixelbyte",
-    role: "Co-Founder & Designer",
-    period: "Oct 2022 - Aug 2024",
-    description: "Co-founded and scaled an NFT design business, building JavaScript-based minting systems that generated unique digital assets on-demand. Shipped 1,000+ NFT packs.",
-    tags: [],
-    url: "https://www.pixelb.xyz/",
+    period: "Jan–Dec 2025",
+    description:
+      "Worked on graph neural networks for atomistic energies and forces in advanced ceramics, including equivariant learning, periodic graph construction, and memory-aware data loading.",
+    tags: ["PyTorch", "e3nn", "PyG"],
   },
 ];
 
 export const education = [
   {
     institution: "University of Alberta",
-    degree: "BSc Computing Science (Specialization)",
-    period: "Sep 2023 - Apr 2027",
-    details: "Focus on Machine Learning, AI, and Software Engineering.",
+    degree: "BSc Computer Science · Major in Artificial Intelligence",
+    period: "Expected graduation 2027",
+    details:
+      "Focused on artificial intelligence, scientific machine learning, and software engineering.",
   },
 ];

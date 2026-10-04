@@ -1,81 +1,66 @@
-import { Navbar } from '@/components/Navbar';
-import { CTAFooter } from '@/components/layout/CTAFooter';
-import { PageTransition } from '@/components/layout/PageTransition';
-import { SectionReveal } from '@/components/ui/SectionReveal';
-import { ProjectCard } from '@/components/ui/ProjectCard';
-import { projects } from '@/data/projects';
+import { Link } from "react-router-dom";
+import { Navbar } from "@/components/Navbar";
+import { CTAFooter } from "@/components/layout/CTAFooter";
+import { PageTransition } from "@/components/layout/PageTransition";
+import { SectionReveal } from "@/components/ui/SectionReveal";
+import { ProjectCard } from "@/components/ui/ProjectCard";
+import { projects, otherProjects } from "@/data/projects";
 
 export function Home() {
   return (
     <PageTransition>
       <Navbar />
-
-      <main>
-        {/* Hero */}
-        <section
-          className="min-h-[85vh] flex flex-col items-center justify-center text-center px-8"
-          style={{ paddingTop: '6rem' }}
-        >
+      <main id="main-content">
+        <section className="portfolio-hero page-width">
           <SectionReveal>
-            <h1
-              className="max-w-3xl mx-auto"
-              style={{ fontFamily: 'var(--font-serif)' }}
-            >
-              Hello! I'm Zain,
-            </h1>
-          </SectionReveal>
-          <SectionReveal delay={0.1}>
-            <p
-              className="text-2xl md:text-3xl mt-4 max-w-2xl mx-auto"
-              style={{
-                fontFamily: 'var(--font-serif)',
-                color: 'var(--color-muted)',
-                fontWeight: 400,
-                lineHeight: 1.3,
-              }}
-            >
-              I build the brains behind applications that think for themselves.
+            <h1>Hello! I’m Zain,</h1>
+            <p className="hero-subline">
+              I build machine-learning systems for science and software.
             </p>
-          </SectionReveal>
-          <SectionReveal delay={0.2}>
-            <div className="flex items-center gap-6 mt-10">
-              <a
-                href="mailto:mzainasad05@gmail.com"
-                className="px-6 py-3 rounded-full text-sm font-medium transition-colors duration-300"
-                style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-bg)' }}
-              >
-                Let's chat
+            <div className="hero-bottom">
+              <a className="hero-cta" href="#projects">
+                View my work <span aria-hidden="true">↓</span>
               </a>
-              <div className="text-sm text-left">
-                <p className="font-medium" style={{ color: 'var(--color-fg)' }}>
-                  Currently @ UAlberta
-                </p>
-                <p style={{ color: 'var(--color-muted)', fontSize: '0.8125rem' }}>
-                  ML Intern · CDAM
-                </p>
+              <div className="hero-status">
+                <p>Currently @ UAlberta</p>
+                <p>ML Research · Molecular Simulation</p>
               </div>
             </div>
           </SectionReveal>
         </section>
-
-        {/* Projects Grid */}
-        <section
-          id="projects"
-          className="px-8"
-          style={{ paddingTop: 'var(--section-padding)', paddingBottom: 'var(--section-padding)' }}
-        >
-          <div className="mx-auto max-w-[var(--container-max)]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
-              {projects.map((project, index) => (
-                <SectionReveal key={project.id} delay={index * 0.1}>
-                  <ProjectCard project={project} index={index} />
+        <section id="projects" className="work-section page-width">
+          <div className="section-heading">
+            <h2>Selected Work</h2>
+          </div>
+          <div className="featured-list">
+            {projects
+              .filter((p) => p.featured)
+              .map((project, index) => (
+                <SectionReveal key={project.id}>
+                  <ProjectCard project={project} index={index} featured />
                 </SectionReveal>
               ))}
-            </div>
+          </div>
+          <div className="selected-grid">
+            {projects
+              .filter((p) => !p.featured)
+              .map((project, index) => (
+                <SectionReveal key={project.id}>
+                  <ProjectCard project={project} index={index + 3} />
+                </SectionReveal>
+              ))}
           </div>
         </section>
+        <section className="other-work page-width">
+          <p className="eyebrow">Earlier explorations</p>
+          {otherProjects.map((project) => (
+            <Link key={project.title} to={project.blogUrl}>
+              <h3>{project.title}</h3>
+              <span aria-hidden="true">↗</span>
+            </Link>
+          ))}
+        </section>
       </main>
-
       <CTAFooter />
     </PageTransition>
   );

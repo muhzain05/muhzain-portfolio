@@ -11,6 +11,7 @@ export function Blog() {
       <Navbar />
 
       <main
+        id="main-content"
         className="px-8"
         style={{ paddingTop: '8rem', paddingBottom: 'var(--section-padding)' }}
       >

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
@@ -77,3 +78,15 @@ function LanternSVG({ color }) {
     </svg>
   );
 }
+
+Lantern.propTypes = {
+  x: PropTypes.string,
+  y: PropTypes.string,
+  size: PropTypes.number,
+  opacity: PropTypes.number,
+  driftAmount: PropTypes.number,
+  driftDuration: PropTypes.number,
+  parallaxRate: PropTypes.number,
+  color: PropTypes.string,
+};
+LanternSVG.propTypes = { color: PropTypes.string };

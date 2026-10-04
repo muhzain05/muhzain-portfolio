@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 export const VisuallyHidden = ({ className, ...rest }) => (
   <span
     className={className}
@@ -15,3 +16,7 @@ export const VisuallyHidden = ({ className, ...rest }) => (
     {...rest}
   />
 );
+
+VisuallyHidden.propTypes = {
+  className: PropTypes.string,
+};

@@ -1,9 +1,6 @@
-import { createContext, useContext, useState } from 'react';
-
-const LanternContext = createContext({
-  enabled: true,
-  setEnabled: () => {},
-});
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { LanternContext } from './lanternState';
 
 export function LanternProvider({ children }) {
   const [enabled, setEnabled] = useState(true);
@@ -15,6 +12,7 @@ export function LanternProvider({ children }) {
   );
 }
 
-export function useLanterns() {
-  return useContext(LanternContext);
-}
+
+LanternProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
