@@ -99,9 +99,10 @@ export function BlogPost() {
                 height="675"
               />
               <figcaption>
-                {project.id === "ray-tracer"
-                  ? "Actual repository render."
-                  : "Editorial illustration generated with Higgsfield; measured figures are identified separately below."}
+                {project.imageCaption ??
+                  (project.id === "ray-tracer"
+                    ? "Actual repository render."
+                    : "Editorial illustration generated with Higgsfield; measured figures are identified separately below.")}
               </figcaption>
             </figure>
           )}
@@ -151,6 +152,30 @@ export function BlogPost() {
                         {section.figure.caption}{" "}
                         <a
                           href={section.figure.source}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Source ↗
+                        </a>
+                      </figcaption>
+                    </figure>
+                  )}
+                  {section.video && (
+                    <figure className="article-figure">
+                      <video
+                        src={section.video.src}
+                        poster={section.video.poster}
+                        aria-label={section.video.alt}
+                        width={section.video.width}
+                        height={section.video.height}
+                        controls
+                        playsInline
+                        preload="none"
+                      />
+                      <figcaption>
+                        {section.video.caption}{" "}
+                        <a
+                          href={section.video.source}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

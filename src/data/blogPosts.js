@@ -389,6 +389,102 @@ export const blogPosts = [
     "readTime": "2 min read"
   },
   {
+    "id": "celestial-circus",
+    "projectId": "celestial-circus",
+    "title": "Celestial Circus: Tuning a Timed Tightrope",
+    "publishedAt": "Updated November 6, 2026",
+    "tags": [
+      "Unity",
+      "Game development"
+    ],
+    "excerpt": "A six-person course project, and the movement and interface systems I contributed to it.",
+    "sections": [
+      {
+        "heading": "The project",
+        "body": [
+          "Celestial Circus is a 2D platformer built by the Jobless Jesters, a team of six, for CMPUT 250 (Computers and Games) at the University of Alberta. Its itch.io page describes it as returning the performer’s emotions to them in a dark circus performance, and a browser build is published there. The Unity 2022.3 project is written in C#.",
+          "The README lists me as a programmer, with visual art as a secondary role. The story, audio, and level design are teammates’ work, so this post covers only the systems I can point to in the commit history and code: gliding, a timed tightrope rebound, drop-through platforms, and parts of the interface."
+        ]
+      },
+      {
+        "heading": "A short capture",
+        "body": [
+          "This 22-second capture shows the player moving through drum platforms and striped tightropes, with control hints appearing in the corner and star-shaped hazards in the gaps."
+        ],
+        "video": {
+          "src": "/projects/media/celestial-circus-demo.mp4",
+          "poster": "/projects/covers/celestial-circus.webp",
+          "alt": "Screen recording of the jester character moving across drum platforms and tightropes past glowing star hazards, with control hints shown in the top-right corner.",
+          "caption": "Gameplay capture, 22 seconds.",
+          "source": "https://elaytxy.itch.io/celestial-circus",
+          "width": 1600,
+          "height": 1004
+        }
+      },
+      {
+        "heading": "Glide as a modifier",
+        "body": [
+          "Glide is not a separate state in the movement controller. While the player holds the glide input and is already moving downward, the controller sets the Rigidbody’s gravity scale to 2, caps the fall speed at 4 instead of the normal 18, and multiplies horizontal speed by 1.2. Because it only activates on the way down, it cannot stretch a rising jump.",
+          "All three values are serialized fields, so they can be adjusted in the Unity inspector without editing code. The shipped prefabs use the same values as the script defaults."
+        ]
+      },
+      {
+        "heading": "A tightrope with a timing window",
+        "body": [
+          "A tightrope is a spring-driven line. Landing on it stretches it downward; as it snaps back, a short window opens. Pressing jump inside the window gives a boost velocity of 100. Missing it gives a bounce of 22. A press up to 0.08 seconds before the window opens still counts. The component’s own comment describes the idea as a Celeste-style timed jump.",
+          "The values saved in the shipped scene set the window to 0.4 seconds, which differs from the 0.12 seconds and boost of 50 that the script declares as defaults. The commit history shows several passes of tuning the timing and stretch values, and that gap is a reminder that the inspector values, not the code defaults, are what the build uses.",
+          "The rope allows one rebound per landing and re-arms only after the player has moved past either end or well above it. It uses separate ready and not-ready colour gradients as feedback.",
+          "I do not have playtest measurements to report. The numbers describe the implementation, not evidence that the timing feels right to every player."
+        ]
+      },
+      {
+        "heading": "Dropping through platforms",
+        "body": [
+          "The drop-through platform buffers a downward input for 0.15 seconds. When the player is standing on it, the script ignores collisions between the platform and all of the player’s colliders, nudges the player downward, and restores collision once the player is fully below. Disabling collision per player collider, rather than disabling the platform, keeps it solid for anything else."
+        ]
+      },
+      {
+        "heading": "Interface work",
+        "body": [
+          "Most of my other commits are interface work: a redesigned dialogue box with a new serif typeface, a pause menu with Resume, Settings, and Main Menu, in-game settings with restyled volume sliders, a restyled credits screen, floating main-menu masks, and the on-screen control hints.",
+          "The hint component shows each hint once per level load, either after a start delay or when the player comes within a radius of a trigger point, and a new hint replaces the one currently showing."
+        ]
+      }
+    ],
+    "takeaways": [
+      "Expose feel parameters as serialized fields so they can be tuned without code changes.",
+      "A timing window rewards skill; a bigger jump alone would not.",
+      "Naming which parts of a team project are yours keeps a case study honest."
+    ],
+    "sources": [
+      [
+        "Repository and team conventions",
+        "https://github.com/Jobless-Jesters/Celestial-Circus"
+      ],
+      [
+        "Playable build on itch.io",
+        "https://elaytxy.itch.io/celestial-circus"
+      ],
+      [
+        "Movement controller and glide settings",
+        "https://github.com/Jobless-Jesters/Celestial-Circus/blob/main/Assets/Scripts/Player/Movement.cs"
+      ],
+      [
+        "Tightrope controller",
+        "https://github.com/Jobless-Jesters/Celestial-Circus/blob/main/Assets/Scripts/Platforms-Checkpoints/Tightrope/TightropeController.cs"
+      ],
+      [
+        "Drop-through platform",
+        "https://github.com/Jobless-Jesters/Celestial-Circus/blob/main/Assets/Scripts/Platforms-Checkpoints/TwoWayPlatform.cs"
+      ],
+      [
+        "Tutorial hints",
+        "https://github.com/Jobless-Jesters/Celestial-Circus/blob/main/Assets/Scripts/Menus/TutorialHints.cs"
+      ]
+    ],
+    "readTime": "3 min read"
+  },
+  {
     "id": "3d-ray-tracer",
     "projectId": "ray-tracer",
     "title": "From a Ray to a Pixel in C",

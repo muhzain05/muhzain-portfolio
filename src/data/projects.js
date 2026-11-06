@@ -49,6 +49,20 @@ export const projects = [
     blogUrl: "/blog/kv-cache-transfer",
   },
   {
+    id: "celestial-circus",
+    title: "Celestial Circus",
+    category: "Game development / Unity",
+    description:
+      "A six-person dark circus platformer, and the glide, tightrope, and menu systems I built for it.",
+    image: "/projects/covers/celestial-circus.webp",
+    imageAlt:
+      "Gameplay screenshot of a jester character among drum platforms, striped tightropes, and glowing star hazards.",
+    imageCaption: "Screenshot from the game.",
+    tags: ["Unity", "C#", "2D platformer"],
+    githubUrl: "https://github.com/Jobless-Jesters/Celestial-Circus",
+    blogUrl: "/blog/celestial-circus",
+  },
+  {
     id: "plantagotchi",
     title: "Plantagotchi",
     category: "Mobile / Real-time",

@@ -55,6 +55,12 @@ for (const post of blogPosts) {
           (paragraph) => typeof paragraph === "string" && paragraph.length > 0,
         ),
     );
+    if (section.video) {
+      asset(section.video.src);
+      asset(section.video.poster);
+      assert.ok(section.video.alt?.length > 20, "Video needs alt text");
+      urls.add(section.video.source);
+    }
     if (section.figure) {
       asset(section.figure.src);
       urls.add(section.figure.source);

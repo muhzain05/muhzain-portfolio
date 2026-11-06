@@ -264,6 +264,7 @@
 .article-cover img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; background: #2a211b; }
 .article-figure { margin: 30px 0; }
 .article-figure img { width: 100%; height: auto; border: 1px solid var(--color-border); border-radius: 3px; background: white; }
+.article-figure video { display: block; width: 100%; height: auto; border-radius: 3px; background: #1a0b12; }
 figcaption { font-size: 12px; line-height: 1.7; color: var(--color-muted); margin-top: 10px; }
 figcaption a, .article-sources a { text-decoration: underline; text-underline-offset: 3px; }
 .article-callout { margin-block: 24px; padding: 18px 22px; border-left: 2px solid var(--color-accent); background: var(--color-hover); font-size: 15px; }
