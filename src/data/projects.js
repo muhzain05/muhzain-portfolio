@@ -53,7 +53,7 @@ export const projects = [
     title: "Celestial Circus",
     category: "Game development / Unity",
     description:
-      "A six-person dark circus platformer, and the glide, tightrope, and menu systems I built for it.",
+      "A clown who has lost their emotions climbs the Big Top in a six-person Unity platformer; I built the glide, tightrope, and menu systems.",
     image: "/projects/covers/celestial-circus.webp",
     imageAlt:
       "Gameplay screenshot of a jester character among drum platforms, striped tightropes, and glowing star hazards.",

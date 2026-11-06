@@ -391,19 +391,28 @@ export const blogPosts = [
   {
     "id": "celestial-circus",
     "projectId": "celestial-circus",
-    "title": "Celestial Circus: Tuning a Timed Tightrope",
+    "title": "Celestial Circus: Returning a Clown’s Emotions",
     "publishedAt": "Updated November 6, 2026",
     "tags": [
       "Unity",
       "Game development"
     ],
-    "excerpt": "A six-person course project, and the movement and interface systems I contributed to it.",
+    "excerpt": "A clown who has lost their emotions must climb the Big Top, with Comedy and Tragedy as their hosts. A six-person Unity platformer, and the glide, tightrope, and interface systems I built for it.",
     "sections": [
       {
-        "heading": "The project",
+        "heading": "The story",
         "body": [
-          "Celestial Circus is a 2D platformer built by the Jobless Jesters, a team of six, for CMPUT 250 (Computers and Games) at the University of Alberta. Its itch.io page describes it as returning the performer’s emotions to them in a dark circus performance, and a browser build is published there. The Unity 2022.3 project is written in C#.",
-          "The README lists me as a programmer, with visual art as a secondary role. The story, audio, and level design are teammates’ work, so this post covers only the systems I can point to in the commit history and code: gliding, a timed tightrope rebound, drop-through platforms, and parts of the interface."
+          "The game opens in a circus run by two hosts, Comedy and Tragedy, who welcome the audience to the Celestial Circus. Tonight’s main act is their clown, except the clown has been cursed. In Tragedy’s words, wickedness has made them “lose their precious emotions.” Comedy gushes and Tragedy sighs. When Tragedy says it saddens them, Comedy answers, “You are always sad.”",
+          "There is a way back. Twice the clown must push themself to reach the curtains over the Big Top, a climb Tragedy calls “a trial, terrible and punishing,” and the first choice is whose trial to take first. The itch.io page sums the game up as returning the performer’s emotions to them in a dark circus performance.",
+          "The darkness is in the tone as much as the setting. The Comedy dialogue in the repository starts inside the clown’s memories of a sold-out show, then turns on them: “Isn’t it hilarious that their ambition is worthless now, as they perform to absolutely no one at all?” The story and its writing belong to the team’s writers."
+        ]
+      },
+      {
+        "heading": "How it was made",
+        "body": [
+          "Celestial Circus is a 2D platformer built by the Jobless Jesters, a team of six, for CMPUT 250 (Computers and Games) at the University of Alberta. The team had a producer, a lead designer, a lead writer, an audio lead, and programmers. The README lists me as a programmer, with visual art as a secondary role. The project is written in C# on Unity 2022.3, and a browser build is published on itch.io.",
+          "The repository records how six people shared one Unity project: feature branches, pull requests, and typed commit messages such as feat: and fix:. By the latest commits, merged pull requests were numbered in the 140s.",
+          "The writing lives in plain CSV files, one line per row, naming who speaks, which portraits show, and the text. A small parser turns each file into a sequence for the dialogue box, so the story is kept apart from the scenes. Levels follow the same split as the story: Comedy and Tragedy each have their own level scene, and each has a template scene named “DUPLICATE ME” for building new ones."
         ]
       },
       {
@@ -422,39 +431,40 @@ export const blogPosts = [
         }
       },
       {
-        "heading": "Glide as a modifier",
+        "heading": "My part: the twirl",
         "body": [
-          "Glide is not a separate state in the movement controller. While the player holds the glide input and is already moving downward, the controller sets the Rigidbody’s gravity scale to 2, caps the fall speed at 4 instead of the normal 18, and multiplies horizontal speed by 1.2. Because it only activates on the way down, it cannot stretch a rising jump.",
+          "In the opening dialogue, the two hosts take turns listing what the clown can do: run, jump, leap once more through the air, and “twirl, floating them to podiums further away.” That floating twirl is the glide I built.",
+          "Glide is not a separate state in the movement controller. While the player holds the glide input and is already falling, the controller sets the Rigidbody’s gravity scale to 2, caps the fall speed at 4 instead of the normal 18, and multiplies horizontal speed by 1.2. Because it only starts on the way down, it cannot stretch a rising jump.",
           "All three values are serialized fields, so they can be adjusted in the Unity inspector without editing code. The shipped prefabs use the same values as the script defaults."
         ]
       },
       {
-        "heading": "A tightrope with a timing window",
+        "heading": "My part: the tightrope",
         "body": [
-          "A tightrope is a spring-driven line. Landing on it stretches it downward; as it snaps back, a short window opens. Pressing jump inside the window gives a boost velocity of 100. Missing it gives a bounce of 22. A press up to 0.08 seconds before the window opens still counts. The component’s own comment describes the idea as a Celeste-style timed jump.",
+          "A tightrope is a spring-driven line. Landing on it stretches it downward, and as it snaps back, a short window opens. Pressing jump inside the window gives a boost velocity of 100, and missing it gives a bounce of 22. A press up to 0.08 seconds before the window opens still counts. The component’s own comment describes the idea as a Celeste-style timed jump.",
           "The values saved in the shipped scene set the window to 0.4 seconds, which differs from the 0.12 seconds and boost of 50 that the script declares as defaults. The commit history shows several passes of tuning the timing and stretch values, and that gap is a reminder that the inspector values, not the code defaults, are what the build uses.",
           "The rope allows one rebound per landing and re-arms only after the player has moved past either end or well above it. It uses separate ready and not-ready colour gradients as feedback.",
           "I do not have playtest measurements to report. The numbers describe the implementation, not evidence that the timing feels right to every player."
         ]
       },
       {
-        "heading": "Dropping through platforms",
+        "heading": "My part: dropping through platforms",
         "body": [
           "The drop-through platform buffers a downward input for 0.15 seconds. When the player is standing on it, the script ignores collisions between the platform and all of the player’s colliders, nudges the player downward, and restores collision once the player is fully below. Disabling collision per player collider, rather than disabling the platform, keeps it solid for anything else."
         ]
       },
       {
-        "heading": "Interface work",
+        "heading": "My part: the interface",
         "body": [
-          "Most of my other commits are interface work: a redesigned dialogue box with a new serif typeface, a pause menu with Resume, Settings, and Main Menu, in-game settings with restyled volume sliders, a restyled credits screen, floating main-menu masks, and the on-screen control hints.",
-          "The hint component shows each hint once per level load, either after a start delay or when the player comes within a radius of a trigger point, and a new hint replaces the one currently showing."
+          "Most of my other commits are interface work. I redesigned the dialogue box that carries the hosts’ lines, with new art and a serif typeface. I also built a pause menu with Resume, Settings, and Main Menu, in-game settings with restyled volume sliders, a restyled credits screen, and a floating animation for the main-menu masks.",
+          "The on-screen control hints are mine too. A hint component shows each one once per level load, either after a start delay or when the player comes within a radius of a trigger point, and a new hint replaces the one currently showing."
         ]
       }
     ],
     "takeaways": [
-      "Expose feel parameters as serialized fields so they can be tuned without code changes.",
-      "A timing window rewards skill; a bigger jump alone would not.",
-      "Naming which parts of a team project are yours keeps a case study honest."
+      "Keeping dialogue in plain data files separates the writing from the scenes, which suits a team where writers and programmers work in parallel.",
+      "A timing window rewards skill in a way a bigger jump alone would not.",
+      "Check the values a build actually ships, not only the defaults declared in code."
     ],
     "sources": [
       [
@@ -464,6 +474,18 @@ export const blogPosts = [
       [
         "Playable build on itch.io",
         "https://elaytxy.itch.io/celestial-circus"
+      ],
+      [
+        "Opening dialogue (Comedy and Tragedy)",
+        "https://github.com/Jobless-Jesters/Celestial-Circus/blob/main/Assets/Dialogue/csv%20files/into_pt2.csv"
+      ],
+      [
+        "Comedy dialogue",
+        "https://github.com/Jobless-Jesters/Celestial-Circus/blob/main/Assets/Dialogue/csv%20files/com_pt4.csv"
+      ],
+      [
+        "Dialogue CSV parser",
+        "https://github.com/Jobless-Jesters/Celestial-Circus/blob/main/Assets/Dialogue/Scripts/DialogueCore/DialogueCSVParser.cs"
       ],
       [
         "Movement controller and glide settings",
@@ -482,7 +504,7 @@ export const blogPosts = [
         "https://github.com/Jobless-Jesters/Celestial-Circus/blob/main/Assets/Scripts/Menus/TutorialHints.cs"
       ]
     ],
-    "readTime": "3 min read"
+    "readTime": "4 min read"
   },
   {
     "id": "3d-ray-tracer",
